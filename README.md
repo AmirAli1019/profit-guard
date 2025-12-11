@@ -1,5 +1,5 @@
 
-# Crypto Price Alert Tool
+# profit-guard
 
 A **lightweight CLI tool** to monitor cryptocurrency prices and notify you when they reach **take-profit** or **stop-loss** levels.
 Tested on **Android (termux)**, **Windows** and **Linux Desktop**.
