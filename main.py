@@ -127,13 +127,15 @@ def calculate_profit_and_loss(current_price: float, is_running_on_termux: bool):
 
         if price_ratio > 1:
             if (price_ratio - 1) >= take_profit_percent:
-                message = "The price has reached the take-profit"
+                message = (
+                    f"The {token_symbol.upper()} price has reached the take-profit"
+                )
 
                 push_notification(is_running_on_termux, message)
 
         if price_ratio < 1:
             if (1 - price_ratio) >= stop_loss_percent:
-                message = "The price has reached the stop-loss"
+                message = f"The {token_symbol.upper()} price has reached the stop-loss"
 
                 push_notification(is_running_on_termux, message)
 
