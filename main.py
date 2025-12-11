@@ -8,7 +8,7 @@ import time
 from cli_args import args, parser
 
 # --- API call required components ---
-API_KEY = "YOUR_API_KEY"
+API_KEY = "6b0175c572243265afb7066457c1402d7510867d396ea1c16a62e603eaf14949"
 headers = {"Authorization": f"Bearer {API_KEY}"}
 
 # --- CLI Args ---
@@ -23,7 +23,7 @@ entry_point_price = 0.0
 
 def set_symbol_and_interval():
     global token_symbol, delay_interval_minutes, delay_interval_seconds
-    token_symbol = args.symbol
+    token_symbol = args.symbol.upper()
     delay_interval_minutes = args.interval
     delay_interval_seconds = delay_interval_minutes * 60
 
@@ -127,15 +127,13 @@ def calculate_profit_and_loss(current_price: float, is_running_on_termux: bool):
 
         if price_ratio > 1:
             if (price_ratio - 1) >= take_profit_percent:
-                message = (
-                    f"The {token_symbol.upper()} price has reached the take-profit"
-                )
+                message = f"The {token_symbol} price has reached the take-profit"
 
                 push_notification(is_running_on_termux, message)
 
         if price_ratio < 1:
             if (1 - price_ratio) >= stop_loss_percent:
-                message = f"The {token_symbol.upper()} price has reached the stop-loss"
+                message = f"The {token_symbol} price has reached the stop-loss"
 
                 push_notification(is_running_on_termux, message)
 
@@ -176,7 +174,7 @@ if __name__ == "__main__":
     while True:
         current_price = float(get_price())
         print(
-            f"[{datetime.datetime.now().replace(microsecond=0)}] Price = {current_price}"
+            f"[{datetime.datetime.now().replace(microsecond=0)}] {token_symbol} Price = {current_price}"
         )
         calculate_profit_and_loss(current_price, is_running_on_termux)
 
