@@ -8,7 +8,7 @@ import time
 from cli_args import args, parser
 
 # --- API call required components ---
-API_KEY = "6b0175c572243265afb7066457c1402d7510867d396ea1c16a62e603eaf14949"
+API_KEY = "YOUR_API_KEY"
 headers = {"Authorization": f"Bearer {API_KEY}"}
 
 # --- CLI Args ---
