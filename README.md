@@ -109,6 +109,7 @@ But if you want notification support install [Termux:API](https://f-droid.org/pa
 ```bash
 pkg install termux-api
 ```
+To make sure it is running reliably on termux you should enable wake lock to prevent stoping termux when the screen is locked. Go to the notifications menu and click `acquire wake lock`.
 
 Now it is ready to use.
 
