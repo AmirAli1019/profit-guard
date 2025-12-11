@@ -43,6 +43,8 @@ Install Python library. It is the only required dependency to make the program w
 pip install requests
 ```
 
+Then go to coincap.io, create your account and get your own api key. And put it in API_KEY constant in `main.py`.
+
 ---
 
 ## Usage
