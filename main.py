@@ -172,10 +172,10 @@ if __name__ == "__main__":
         is_running_on_termux = False
 
     while True:
-        current_price = float(get_price())
+        current_price = get_price()
         print(
             f"[{datetime.datetime.now().replace(microsecond=0)}] {token_symbol} Price = {current_price}"
         )
-        calculate_profit_and_loss(current_price, is_running_on_termux)
+        calculate_profit_and_loss(float(current_price), is_running_on_termux)
 
         show_timer()
