@@ -1,3 +1,10 @@
+"""
+A lightweight CLI tool to monitor cryptocurrency prices
+and notify you when they reach take-profit or stop-loss levels.
+
+License: MIT License
+"""
+
 __version__ = "1.1.0"
 
 import datetime

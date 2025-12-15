@@ -34,7 +34,7 @@ Tested on **Android (termux)**, **Windows** and **Linux Desktop**.
 Clone this repository:
 
 ```bash
-git clone https://github.com/AmirAli1019/profit-guard.git
+git clone -b release --single-branch https://github.com/AmirAli1019/profit-guard.git
 ```
 
 Install Python library. It is the only required dependency to make the program work:
@@ -95,7 +95,7 @@ Then clone the repo and install python3:
 
 ```bash
 pkg install git python3
-git clone https://github.com/amirali1019/profit-guard
+git clone -b release --single-branch https://github.com/AmirAli1019/profit-guard.git
 ```
 
 Next, install `requests`:
@@ -109,6 +109,7 @@ But if you want notification support install [Termux:API](https://f-droid.org/pa
 ```bash
 pkg install termux-api
 ```
+
 To make sure it is running reliably on termux you should enable wake lock to prevent stopping termux when the screen is locked. Go to the notifications menu and click `acquire wake lock`.
 
 Now it is ready to use.
