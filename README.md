@@ -58,7 +58,7 @@ python main.py -s BTC # Fetches the BTC price and prints it to the console every
 | Flag                | Description                      | Type  | Default |
 | ------------------- | -------------------------------- | ----- | ------- |
 | `-s, --symbol`      | Cryptocurrency symbol (required) | str   | -       |
-| `-n, --interval`    | Minutes between price updates    | int   | 10      |
+| `-n, --interval`    | The time interval to wait between price updates, in minutes or seconds. For example, enter 5 for 5 minutes or 5s for 5 seconds.Default: 10 minutes    | int   | 10      |
 | `-p, --take-profit` | Take-profit percent              | float | -       |
 | `-l, --stop-loss`   | Stop-loss percent                | float | -       |
 | `-e, --entry-point` | Entry price in USD               | float | -       |
