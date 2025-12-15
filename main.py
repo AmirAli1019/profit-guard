@@ -1,3 +1,5 @@
+__version__ = "1.1.0"
+
 import datetime
 import os
 import platform
@@ -5,7 +7,9 @@ import requests
 import subprocess
 import time
 
-from cli_args import args, parser
+from cli_args import args
+import cli_args
+import notifications
 
 # --- API call required components ---
 API_KEY = "YOUR_API_KEY"
@@ -14,18 +18,17 @@ headers = {"Authorization": f"Bearer {API_KEY}"}
 # --- CLI Args ---
 
 token_symbol = ""
-delay_interval_minutes = 0
 delay_interval_seconds = 0
 take_profit_percent = 0.0
 stop_loss_percent = 0.0
 entry_point_price = 0.0
+is_silent = args.silent
 
 
 def set_symbol_and_interval():
-    global token_symbol, delay_interval_minutes, delay_interval_seconds
+    global token_symbol, delay_interval_seconds
     token_symbol = args.symbol.upper()
-    delay_interval_minutes = args.interval
-    delay_interval_seconds = delay_interval_minutes * 60
+    delay_interval_seconds = cli_args.determine_interval(args.interval)
 
 
 def set_trading_plans():
@@ -49,9 +52,7 @@ elif all([args.take_profit, args.entry_point, args.stop_loss]):
     just_printing_the_price = False
 
 else:
-    parser.error(
-        "If you have entered only one of the options entry_point, stop_loss, or take_profit, you must also enter the others."
-    )
+    cli_args.trading_plans_error()
 
 # --- termux utilities ---
 
@@ -61,20 +62,6 @@ def is_termux():
     termux_path_exists = os.path.isdir("/data/data/com.termux/files/usr/bin")
 
     return is_android and termux_path_exists
-
-
-def push_termux_notification(message: str):
-    subprocess.run(f'termux-notification --title "{message}" --sound', shell=True)
-
-
-# --- Linux notifications ---
-
-
-def push_linux_notification(message: str):
-    subprocess.run(
-        f"notify-send --app-name 'ProfitGuard' --urgency 'critical' --icon 'dialog-information' '{message}'",
-        shell=True,
-    )
 
 
 # --- get_price API call function ---
@@ -110,17 +97,6 @@ def get_price() -> str:
         continue
 
 
-def push_notification(is_running_on_termux: bool, message: str):
-    print(message)
-
-    if not args.silent:
-        if is_running_on_termux:
-            push_termux_notification(message)
-
-        elif platform.system() == "Linux":
-            push_linux_notification(message)
-
-
 def calculate_profit_and_loss(current_price: float, is_running_on_termux: bool):
     if not just_printing_the_price:
         price_ratio = current_price / entry_point_price
@@ -129,13 +105,17 @@ def calculate_profit_and_loss(current_price: float, is_running_on_termux: bool):
             if (price_ratio - 1) >= take_profit_percent:
                 message = f"The {token_symbol} price has reached the take-profit"
 
-                push_notification(is_running_on_termux, message)
+                notifications.push_notification(
+                    message, is_running_on_termux, is_silent
+                )
 
         if price_ratio < 1:
             if (1 - price_ratio) >= stop_loss_percent:
                 message = f"The {token_symbol} price has reached the stop-loss"
 
-                push_notification(is_running_on_termux, message)
+                notifications.push_notification(
+                    message, is_running_on_termux, is_silent
+                )
 
 
 # --- Timer ---
