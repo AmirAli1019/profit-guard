@@ -104,13 +104,15 @@ def get_price() -> str:
         continue
 
 
-def calculate_profit_and_loss(current_price: float, is_running_on_termux: bool):
+def calculate_profit_and_loss(current_price: str, is_running_on_termux: bool):
+    current_price_float = float(current_price)
+
     if not just_printing_the_price:
-        price_ratio = current_price / entry_point_price
+        price_ratio = current_price_float / entry_point_price
 
         if price_ratio > 1:
             if (price_ratio - 1) >= take_profit_percent:
-                message = f"The {token_symbol} price has reached the take-profit"
+                message = f"The {token_symbol} price has reached the take-profit ({current_price})"
 
                 notifications.push_notification(
                     message, is_running_on_termux, is_silent
@@ -118,7 +120,7 @@ def calculate_profit_and_loss(current_price: float, is_running_on_termux: bool):
 
         if price_ratio < 1:
             if (1 - price_ratio) >= stop_loss_percent:
-                message = f"The {token_symbol} price has reached the stop-loss"
+                message = f"The {token_symbol} price has reached the stop-loss ({current_price})"
 
                 notifications.push_notification(
                     message, is_running_on_termux, is_silent
@@ -163,6 +165,6 @@ if __name__ == "__main__":
         print(
             f"[{datetime.datetime.now().replace(microsecond=0)}] {token_symbol} Price = {current_price}"
         )
-        calculate_profit_and_loss(float(current_price), is_running_on_termux)
+        calculate_profit_and_loss(current_price, is_running_on_termux)
 
         show_timer()
