@@ -73,13 +73,13 @@ note: ⚠️ If you specify one of `take-profit`, `stop-loss`, or `entry-point`,
 **Just printing the price every 5 minutes:**
 
 ```bash
-python crypto_api.py -s ETH -n 5
+python main.py -s ETH -n 5
 ```
 
 **Monitoring a trade with stop-loss and take-profit:**
 
 ```bash
-python crypto_api.py -s BTC -n 1 -e 42000 -p 5 -l 2
+python main.py -s BTC -n 1 -e 42000 -p 5 -l 2
 ```
 
 This will notify you if the price **increases by 5%** (take-profit) or **drops by 2%** (stop-loss) from your entry price.
